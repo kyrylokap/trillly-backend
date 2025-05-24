@@ -17,7 +17,7 @@ public class Config {
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true); // Только если отправляешь токен/куки
+                        .allowCredentials(true);
             }
         };
     }
