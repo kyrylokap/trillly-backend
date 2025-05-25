@@ -18,9 +18,7 @@ public class Message {
     private Long id;
 
     private String text;
-
     private LocalDateTime time;
-
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
