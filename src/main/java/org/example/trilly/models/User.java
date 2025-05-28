@@ -1,5 +1,6 @@
 package org.example.trilly.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,10 +26,11 @@ public class User {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "user_chats",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private List<Chat> chats;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
 }

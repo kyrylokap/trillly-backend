@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 @Builder
-public class MessageResponseDTO{
+public class MessagesResponseDTO {
     private List<String> messages;
     private List<LocalDateTime> times;
 }

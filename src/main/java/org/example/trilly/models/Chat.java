@@ -1,6 +1,7 @@
 package org.example.trilly.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +21,11 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "chats")
     private List<User> members;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "chat")
     private List<Message> messages;
 }

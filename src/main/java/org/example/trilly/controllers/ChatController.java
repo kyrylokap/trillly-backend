@@ -3,12 +3,8 @@ package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
 import org.example.trilly.dto.chat.ChatResponseDTO;
-import org.example.trilly.models.Chat;
 import org.example.trilly.services.ChatService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,4 +22,6 @@ public class ChatController{
     public ChatResponseDTO getChatByUsername(@PathVariable String username){
         return chatService.getChatByUsername(username);
     }
+
+
 }
