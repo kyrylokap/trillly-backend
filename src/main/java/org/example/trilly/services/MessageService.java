@@ -32,6 +32,7 @@ public class MessageService {
     }
 
     public Message sendMessage(Long chatId, String text, String username){  //Message response will change on dto
+
         return messageRepository.save(
                 Message.builder().text(text)
                         .time(LocalDateTime.now())
@@ -40,7 +41,7 @@ public class MessageService {
                         .build());
     }
 
-    public Message changeMessage(Long chatId,String username,Long messageId,String text){ //Remake to DTO too
+    public Message changeMessage(Long messageId,String text){ //Remake to DTO too
         Message m = messageRepository.findById(messageId).get();
         m.setText(text);
         return messageRepository.save(m);

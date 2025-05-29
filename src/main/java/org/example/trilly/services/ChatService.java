@@ -20,14 +20,18 @@ public class ChatService {
         return mapToDTO(c);
     }
 
-    public ChatResponseDTO getChatByUsername(String username){
-        Chat c = chatRepository.getChatByMemberUsername(username);
-        return mapToDTO(c);
+    public List<ChatResponseDTO> getChatByUsername(String finder, String found){
+        List<Chat> c = chatRepository.getChatByFinderAndFound(finder, found);
+        List<ChatResponseDTO> chatsAfterMapping = new ArrayList<>();
+        c.forEach( chat -> {
+            chatsAfterMapping.add(mapToDTO(chat));
+        });
+        return chatsAfterMapping;
     }
 
-    public List<ChatResponseDTO> getMyAllChats(Long memberId){
+    public List<ChatResponseDTO> getMyAllChats(String username){
         return chatRepository
-                .findAllByMemberId(memberId).stream()
+                .findAllByMemberUsername(username).stream()
                 .map(this::mapToDTO).toList();
     }
 

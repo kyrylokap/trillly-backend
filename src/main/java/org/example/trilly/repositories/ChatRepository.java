@@ -8,10 +8,16 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository<Chat, Long> {
-    @Query("SELECT c FROM Chat c Join c.members m where  m.id = :userId")
-    List<Chat> findAllByMemberId(@Param("userId") Long userId);
-
     @Query("SELECT c FROM Chat c Join c.members m where  m.username = :username")
-    Chat getChatByMemberUsername(@Param("username") String username);
+    List<Chat> findAllByMemberUsername(@Param("username") String username);
+
+    @Query("""
+            SELECT c FROM Chat c
+            JOIN c.members m1
+            JOIN c.members m2
+            WHERE m1.username = :finder AND m2.username = :found
+            """)
+    List<Chat> getChatByFinderAndFound(@Param("finder") String finder,
+                                 @Param("found") String found);
     Chat getChatById(Long id);
 }
