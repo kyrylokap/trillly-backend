@@ -21,16 +21,6 @@ public class UserController {
         return ResponseEntity.ok(userService.registerUser(requestDTO));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id){
-        return ResponseEntity.ok(userService.getUser(id));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getUsers(){
-        return ResponseEntity.ok(userService.getUsers());
-    }
-
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO requestDTO){

@@ -2,6 +2,7 @@ package org.example.trilly.services;
 
 
 import lombok.AllArgsConstructor;
+import org.example.trilly.dto.message.MessageDTO;
 import org.example.trilly.dto.message.MessagesResponseDTO;
 import org.example.trilly.models.Message;
 import org.example.trilly.repositories.ChatRepository;
@@ -31,19 +32,19 @@ public class MessageService {
                 .times(times).build();
     }
 
-    public Message sendMessage(Long chatId, String text, String username){  //Message response will change on dto
+    public Message sendMessage(Long chatId, MessageDTO message){  //Message response will change on dto
 
         return messageRepository.save(
-                Message.builder().text(text)
+                Message.builder().text(message.getText())
                         .time(LocalDateTime.now())
                         .chat(chatRepository.findById(chatId).get())
-                        .sender(userRepository.findByUsername(username))
+                        .sender(userRepository.findByUsername(message.getSender()))
                         .build());
     }
 
-    public Message changeMessage(Long messageId,String text){ //Remake to DTO too
-        Message m = messageRepository.findById(messageId).get();
-        m.setText(text);
+    public Message changeMessage(MessageDTO message){ //Remake to DTO too
+        Message m = messageRepository.findById(message.getId()).get();
+        m.setText(message.getText());
         return messageRepository.save(m);
     }
 

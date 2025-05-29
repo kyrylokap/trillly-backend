@@ -19,7 +19,7 @@ public class ChatController{
         return ResponseEntity.ok(chatService.getMyAllChats(username));
     }
     @GetMapping("/chats/{finderUsername}/{foundUsername}")   //End-point for search chat by entering username
-    public ResponseEntity<List<ChatResponseDTO>> getChatByUsername(@PathVariable String finderUsername,
+    public ResponseEntity<List<ChatResponseDTO>> getChatBySearching(@PathVariable String finderUsername,
                                              @PathVariable String foundUsername){
         return ResponseEntity.ok(chatService.getChatByUsername(finderUsername, foundUsername));
     }

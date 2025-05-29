@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MessageDTO {
     private String text;
+    private String sender;
+    private Long id;
 }

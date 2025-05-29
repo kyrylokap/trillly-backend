@@ -8,7 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MessageRepository extends JpaRepository<Message, Long> {
-    List<Message> getMessagesByChatId(Long chatId);
+    @Query("""
+        SELECT m FROM Message m
+        WHERE m.chat.id = :chatId
+        ORDER BY m.time ASC
+       """)
+    List<Message> getMessagesByChatId(@Param("chatId") Long chatId);
 
 
 }

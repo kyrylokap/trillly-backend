@@ -3,6 +3,7 @@ package org.example.trilly.services;
 import lombok.AllArgsConstructor;
 import org.example.trilly.dto.chat.ChatResponseDTO;
 import org.example.trilly.models.Chat;
+import org.example.trilly.models.Message;
 import org.example.trilly.models.User;
 import org.example.trilly.repositories.ChatRepository;
 import org.springframework.stereotype.Service;

@@ -17,27 +17,21 @@ public class UserService {
 
 
     public LoginResponseDTO registerUser(LoginRequestDTO request){
-        User user = userRepository.save(
-                User.builder().role("USER")
-                        .password(request.getPassword())
-                        .username(request.getUsername())
-                        .createdAt(LocalDateTime.now()).build()
-        );
-
-        return LoginResponseDTO.builder().username(user.getUsername()).build();
-    }
-
-    public List<User> getUsers(){
-        return userRepository.findAll();
-    }
-
-    public User getUser(Long id){
-        return userRepository.findById(id).get();
+        if(!userRepository.existsByUsername(request.getUsername())){
+            var user = User.builder().role("USER")
+                    .password(request.getPassword())
+                    .username(request.getUsername())
+                    .createdAt(LocalDateTime.now()).build();
+            userRepository.save(user);
+            return LoginResponseDTO.builder().username(user.getUsername()).build();
+        }
+        return LoginResponseDTO.builder().username("no").build();
     }
 
     public LoginResponseDTO login(LoginRequestDTO request){
+        var user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
         return LoginResponseDTO.builder()
-                .username(userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword()).getUsername())
+                .username(user == null ? "no" : user.getUsername())
                 .build();
     }
 
