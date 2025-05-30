@@ -32,9 +32,9 @@ public class MessageService {
                 .times(times).build();
     }
 
-    public Message sendMessage(Long chatId, MessageDTO message){  //Message response will change on dto
+    public void sendMessage(MessageDTO message, Long chatId){  //Message response will change on dto
 
-        return messageRepository.save(
+        messageRepository.save(
                 Message.builder().text(message.getText())
                         .time(LocalDateTime.now())
                         .chat(chatRepository.findById(chatId).get())
@@ -42,13 +42,13 @@ public class MessageService {
                         .build());
     }
 
-    public Message changeMessage(MessageDTO message){ //Remake to DTO too
-        Message m = messageRepository.findById(message.getId()).get();
+    public void changeMessage(MessageDTO message, Long chatId){ //Remake to DTO too
+        Message m = messageRepository.findMessageByIdAndChatId(message.getId(), chatId);
         m.setText(message.getText());
-        return messageRepository.save(m);
+        messageRepository.save(m);
     }
 
-    public void deleteMessage(Long messageId){
-        messageRepository.deleteById(messageId);
+    public void deleteMessage(Long messageId, Long chatId){
+        messageRepository.deleteByIdAndChatId(messageId, chatId);
     }
 }

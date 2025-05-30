@@ -8,8 +8,7 @@ import org.example.trilly.models.User;
 import org.example.trilly.repositories.ChatRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -24,9 +23,7 @@ public class ChatService {
     public List<ChatResponseDTO> getChatByUsername(String finder, String found){
         List<Chat> c = chatRepository.getChatByFinderAndFound(finder, found);
         List<ChatResponseDTO> chatsAfterMapping = new ArrayList<>();
-        c.forEach( chat -> {
-            chatsAfterMapping.add(mapToDTO(chat));
-        });
+        c.forEach( chat -> chatsAfterMapping.add(mapToDTO(chat)));
         return chatsAfterMapping;
     }
 
@@ -37,8 +34,9 @@ public class ChatService {
     }
 
     private ChatResponseDTO mapToDTO(Chat c){
-        String lastMessage = c.getMessages().isEmpty() ?
-                            "" : c.getMessages().get(c.getMessages().size() - 1).getText();
+        List<Message> messages = c.getMessages().stream().sorted(Comparator.comparing(Message::getTime)).toList();
+        String lastMessage = messages.isEmpty() ? "" : messages.get(messages.size() - 1).getText();
+
         List<String> usernames = c.getMembers().stream()
                 .map(User::getUsername).toList();
 

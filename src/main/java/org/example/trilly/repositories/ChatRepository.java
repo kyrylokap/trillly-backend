@@ -11,7 +11,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query("""
         SELECT c FROM Chat c Join c.members m where m.username = :username
         ORDER BY (
-                SELECT MAX(msg.time)
+                SELECT max(msg.time)
                 FROM Message msg
                 WHERE msg.chat = c
             ) DESC

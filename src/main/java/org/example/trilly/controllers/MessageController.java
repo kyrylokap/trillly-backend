@@ -22,19 +22,19 @@ public class MessageController{
     @PostMapping("/{chatId}/messages")
     public ResponseEntity<Void> sendMessage(@PathVariable Long chatId, //Message response will change on dto
                                                @RequestBody MessageDTO message){
-        messageService.sendMessage(chatId, message);
+        messageService.sendMessage(message, chatId);
         return  ResponseEntity.ok().build();
     }
     @PutMapping("/{chatId}/messages")
     public ResponseEntity<Void> changeMessage(@PathVariable Long chatId,
                                                  @RequestBody MessageDTO message){
-        messageService.changeMessage(message);
+        messageService.changeMessage(message, chatId);
         return ResponseEntity.ok().build();
     }
     @DeleteMapping("/{chatId}/messages/{messageId}")
     public ResponseEntity<Void> deleteMessage(@PathVariable Long chatId,
                               @PathVariable Long messageId){
-        messageService.deleteMessage(messageId);
+        messageService.deleteMessage(messageId, chatId);
         return ResponseEntity.ok().build();
     }
 }

@@ -15,5 +15,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
        """)
     List<Message> getMessagesByChatId(@Param("chatId") Long chatId);
 
+    void deleteByIdAndChatId(Long Id, Long chatId);
 
+    Message findMessageByIdAndChatId(Long id, Long chatId);
 }
