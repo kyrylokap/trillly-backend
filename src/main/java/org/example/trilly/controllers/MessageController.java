@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.trilly.dto.message.MessageDTO;
 import org.example.trilly.dto.message.MessagesResponseDTO;
-import org.example.trilly.models.Message;
 import org.example.trilly.services.MessageService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @AllArgsConstructor

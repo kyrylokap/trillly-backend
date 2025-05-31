@@ -33,5 +33,10 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
+
+    @OneToMany
+    private List<Like> likes;
+    @OneToMany
+    private List<Post> posts;
 }
 

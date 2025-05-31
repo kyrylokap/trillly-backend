@@ -15,4 +15,5 @@ import java.util.List;
 public class MessagesResponseDTO{
     private List<String> messages;
     private List<LocalDateTime> times;
+    private List<String> senders;
 }
