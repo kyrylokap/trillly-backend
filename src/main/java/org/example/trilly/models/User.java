@@ -34,9 +34,12 @@ public class User {
     @OneToMany(mappedBy = "sender")
     private List<Message> messages;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
     private List<Like> likes;
-    @OneToMany
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Post> posts;
 }
 

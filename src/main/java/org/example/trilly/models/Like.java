@@ -1,5 +1,6 @@
 package org.example.trilly.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class Like {
     private Long id;
     @ManyToOne
     @JoinColumn(name="post_id")
+    @JsonIgnore
     private Post post;
 
     @ManyToOne
