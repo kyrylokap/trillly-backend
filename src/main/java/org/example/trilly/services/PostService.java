@@ -34,6 +34,7 @@ public class PostService {
                 .description(postDTO.getDescription())
                 .postTime(LocalDateTime.now())
                 .user(userRepository.findByUsername(username))
+                .place(postDTO.getPlace())
                 .mediaUrl(postDTO.getMediaUrl()).build();
         postRepository.save(post);
     }
@@ -47,6 +48,7 @@ public class PostService {
                 .mediaUrl(p.getMediaUrl())
                 .username(p.getUser().getUsername())
                 .likesCount(getLikesCount( p.getLikes().size()))
+                .place(p.getPlace())
                 .build();
     }
 

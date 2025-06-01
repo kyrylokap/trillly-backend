@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class PostDTO{
     private String mediaUrl;
     private String description;
+    private String place;
 }

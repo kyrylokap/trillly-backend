@@ -43,4 +43,17 @@ public class LikeService {
         if(likesCount < 1000000)return String.valueOf(likesCount);
         return String.valueOf(likesCount / 1000) + "M";
     }
+
+    public boolean likePost(String username, Long postId){
+        if(likeRepository.existsByUserUsernameAndPostId(username,postId)){
+            Like l = likeRepository.findByPostIdAndUserUsername(postId, username);
+            likeRepository.delete(l);
+            return false;
+        }else{
+            var user = userRepository.findByUsername(username);
+            var post = postRepository.findById(postId).get();
+            likeRepository.save(Like.builder().post(post).user(user).build());
+        }
+        return true;
+    }
 }

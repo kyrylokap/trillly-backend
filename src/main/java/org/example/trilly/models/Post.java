@@ -35,4 +35,5 @@ public class Post {
     @Column(name = "media_url")
     private String mediaUrl;
 
+    private String place;
 }

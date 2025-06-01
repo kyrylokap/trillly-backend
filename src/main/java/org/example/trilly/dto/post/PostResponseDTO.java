@@ -18,4 +18,5 @@ public class PostResponseDTO {
     private String likesCount;
     private LocalDateTime postTime;
     private String mediaUrl;
+    private String place;
 }
