@@ -1,4 +1,4 @@
-package org.example.trilly.dto;
+package org.example.trilly.dto.comment;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

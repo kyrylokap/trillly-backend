@@ -36,4 +36,7 @@ public class Post {
     private String mediaUrl;
 
     private String place;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }
