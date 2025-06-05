@@ -25,13 +25,13 @@ public class UserService {
             userRepository.save(user);
             return LoginResponseDTO.builder().username(user.getUsername()).build();
         }
-        return LoginResponseDTO.builder().username("no").build();
+        return null;
     }
 
     public LoginResponseDTO login(LoginRequestDTO request){
         var user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
-        return LoginResponseDTO.builder()
-                .username(user == null ? "no" : user.getUsername())
+        return user == null ? null : LoginResponseDTO.builder()
+                .username(user.getUsername())
                 .build();
     }
 
