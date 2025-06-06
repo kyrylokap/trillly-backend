@@ -1,6 +1,7 @@
 package org.example.trilly.models.enums;
 
 public enum RelationStatus {
+    NONE,
     REQUESTED,
     PENDING,
     FRIENDS,

@@ -98,4 +98,3 @@ public class UserServiceTest {
         verify(userRepository).findByUsernameAndPassword("kyrylo", "wrongpass");
     }
 }
-
