@@ -11,6 +11,8 @@ import org.example.trilly.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +24,20 @@ public class MessageService {
     private final UserRepository userRepository;
     public MessagesResponseDTO getMessagesByChatId(Long chatId){
         List<String> messages = new ArrayList<>();
-        List<LocalDateTime> times = new ArrayList<>();
+        List<String> times = new ArrayList<>();
         List<String> senders = new ArrayList<>();
         messageRepository.getMessagesByChatId(chatId).forEach(message -> {
             messages.add(message.getText());
-            times.add(message.getTime());
+
+            String time = message.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+            times.add(time);
+
             senders.add(message.getSender().getUsername());
         });
         return MessagesResponseDTO.builder()
                 .messages(messages)
-                .times(times).senders(senders).build();
+                .times(times)
+                .senders(senders).build();
     }
 
     public void sendMessage(MessageDTO message, Long chatId){

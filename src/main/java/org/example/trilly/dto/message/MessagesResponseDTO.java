@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,6 +15,6 @@ import java.util.List;
 @Builder
 public class MessagesResponseDTO{
     private List<String> messages;
-    private List<LocalDateTime> times;
+    private List<String> times;
     private List<String> senders;
 }
