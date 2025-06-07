@@ -2,15 +2,9 @@ package org.example.trilly.models.enums;
 
 public enum RelationStatus {
     NONE,
-    REQUESTED,
-    PENDING,
-    FRIENDS,
-    BLOCKED,
-    BLOCKED_BY,
-    MUTUAL_BLOCK,
     FOLLOWING,
-    FOLLOWED_BY,
-    MUTUAL_FOLLOW,
-    IGNORED,
-    UNFRIENDED
+    FOLLOWED,
+    FRIEND,
+    BLOCKED,
+
 }

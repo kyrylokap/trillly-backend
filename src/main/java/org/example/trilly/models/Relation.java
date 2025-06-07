@@ -27,8 +27,8 @@ public class Relation {
     @ManyToOne
     private User secondUser;
 
-    @Column(name = "relation_status")
-    @Enumerated(EnumType.STRING)
+    @Column(name = "relation_status", columnDefinition = "status")
+    @Enumerated(value = EnumType.STRING)
     private RelationStatus relationStatus;
 
     @Column(name = "created_at")

@@ -12,11 +12,7 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
     @Query("""
         SELECT r FROM Relation r where 
         r.firstUser.username = :username 
-        AND r.relationStatus IN :relFirstUser
-        OR 
-        (
-        r.secondUser.username = :username 
-        AND r.relationStatus IN :relSecondUser)
+        AND r.relationStatus IN :relations
     """)
 
     /**
@@ -33,8 +29,7 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
      */
     List<Relation> findRelationsByUsernameAndStatuses(
             @Param("username") String username,
-            @Param("relFirstUser") List<RelationStatus> relFirstUser,
-            @Param("relSecondUser") List<RelationStatus> relSecondUser
+            @Param("relations") List<RelationStatus> relations
     );
 
     boolean existsByFirstUserUsernameAndSecondUserUsername(String first, String second);

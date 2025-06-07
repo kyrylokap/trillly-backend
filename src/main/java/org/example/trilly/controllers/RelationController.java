@@ -32,7 +32,19 @@ public class RelationController{
 
     @PutMapping("/user/unFollow")
     public ResponseEntity<Void> unfollowUser(@RequestBody RelationRequestDTO request){
-        relationService.unFollow(request);
+        relationService.unfollow(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/user/block")
+    public ResponseEntity<Void> blockUser(@RequestBody RelationRequestDTO request){
+        relationService.block(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/user/unblock")
+    public ResponseEntity<Void> unblockUser(@RequestBody RelationRequestDTO request){
+        relationService.unblock(request);
         return ResponseEntity.ok().build();
     }
 }

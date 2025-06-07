@@ -19,24 +19,30 @@ public class RelationService {
     private final RelationRepository relationRepository;
     private final UserRepository userRepository;
 
-    //TODO
-    // 2.block user
-    // 3.accept to followed
+
+
+    public void block(RelationRequestDTO r){
+        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.BLOCKED, RelationStatus.NONE);
+    }
+
+    public void unblock(RelationRequestDTO r){
+        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.NONE, RelationStatus.NONE);
+    }
 
     public void follow(RelationRequestDTO r) {
         Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(r.getFirstUsername(),r.getSecondUsername());
-        if(relation != null && relation.getRelationStatus() == RelationStatus.FOLLOWED_BY){
-            saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FRIENDS, RelationStatus.FRIENDS);
+        if(relation != null && relation.getRelationStatus() == RelationStatus.FOLLOWED){
+            saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FRIEND, RelationStatus.FRIEND);
             return;
         }
-        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FOLLOWING, RelationStatus.FOLLOWED_BY);
+        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FOLLOWING, RelationStatus.FOLLOWED);
     }
 
-    public void unFollow(RelationRequestDTO r){
+    public void unfollow(RelationRequestDTO r){
         Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(r.getFirstUsername(),r.getSecondUsername());
 
         RelationStatus relationStatus = null ;
-        if(relation.getRelationStatus() == RelationStatus.FRIENDS){
+        if(relation.getRelationStatus() == RelationStatus.FRIEND){
             relationStatus = RelationStatus.FOLLOWING;
         }else if(relation.getRelationStatus() == RelationStatus.FOLLOWING){
             relationStatus = RelationStatus.NONE;
@@ -70,15 +76,13 @@ public class RelationService {
     public List<RelationResponseDTO> getUserFollowers(RelationRequestDTO request){
        return mapListToListDTO(
                relationRepository.findRelationsByUsernameAndStatuses(request.getFirstUsername(),
-                getFirstTypeRelationStatus(),
-                getSecondTypeRelationStatus()), request.getFirstUsername());
+                getFirstTypeRelationStatus()), request.getFirstUsername());
     }
 
     public List<RelationResponseDTO> getUserFollowings(RelationRequestDTO request){
         return mapListToListDTO(
                 relationRepository.findRelationsByUsernameAndStatuses(request.getFirstUsername(),
-                getSecondTypeRelationStatus(),
-                getFirstTypeRelationStatus()), request.getFirstUsername()
+                getSecondTypeRelationStatus()), request.getFirstUsername()
         );
     }
 
@@ -97,10 +101,10 @@ public class RelationService {
 
 
     private List<RelationStatus> getFirstTypeRelationStatus(){
-        return List.of(RelationStatus.FRIENDS,RelationStatus.FOLLOWED_BY);
+        return List.of(RelationStatus.FRIEND,RelationStatus.FOLLOWED);
     }
 
     private List<RelationStatus> getSecondTypeRelationStatus(){
-        return List.of(RelationStatus.FRIENDS,RelationStatus.FOLLOWING);
+        return List.of(RelationStatus.FRIEND,RelationStatus.FOLLOWING);
     }
 }
