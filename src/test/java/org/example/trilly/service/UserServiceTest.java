@@ -1,7 +1,6 @@
 package org.example.trilly.service;
 
-import org.example.trilly.dto.login.LoginRequestDTO;
-import org.example.trilly.dto.login.LoginResponseDTO;
+import org.example.trilly.dto.user.login.LoginRequestDTO;
 import org.example.trilly.models.User;
 import org.example.trilly.repositories.UserRepository;
 import org.example.trilly.services.UserService;

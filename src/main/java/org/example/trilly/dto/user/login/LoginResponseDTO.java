@@ -1,4 +1,4 @@
-package org.example.trilly.dto.login;
+package org.example.trilly.dto.user.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder
-public class LoginRequestDTO {
+public class LoginResponseDTO {
     private String username;
-    private String password;
 }
