@@ -34,7 +34,7 @@ public class MessageService {
                 .times(times).senders(senders).build();
     }
 
-    public void sendMessage(MessageDTO message, Long chatId){  //Message response will change on dto
+    public void sendMessage(MessageDTO message, Long chatId){
 
         messageRepository.save(
                 Message.builder().text(message.getText())
@@ -44,7 +44,7 @@ public class MessageService {
                         .build());
     }
 
-    public void changeMessage(MessageDTO message, Long chatId){ //Remake to DTO too
+    public void changeMessage(MessageDTO message, Long chatId){
         Message m = messageRepository.findMessageByIdAndChatId(message.getId(), chatId);
         m.setText(message.getText());
         messageRepository.save(m);
