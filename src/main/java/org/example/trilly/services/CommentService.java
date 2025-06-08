@@ -11,6 +11,7 @@ import org.example.trilly.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class CommentService {
         return CommentResponseDTO.builder()
                 .username(comment.getUser().getUsername())
                 .text(comment.getText())
-                .commentTime(comment.getCommentTime())
+                .commentTime(comment.getCommentTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy  hh:mm")))
                 .build();
     }
 

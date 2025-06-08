@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponseDTO {
     private String username;
-    private LocalDateTime commentTime;
+    private String commentTime;
     private String text;
 }
