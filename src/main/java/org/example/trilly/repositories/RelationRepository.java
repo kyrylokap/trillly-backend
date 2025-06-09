@@ -24,7 +24,7 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
      * @return list of matching Relation entities
      *
      * Example:
-     * - To get followers: pass [FOLLOWED_BY, FRIENDS] as relFirstUser and [FRIENDS, FOLLOWING] as relSecondUser
+     * - To get followers: pass [FOLLOWED, FRIEND] as relFirstUser and [FRIEND, FOLLOWING] as relSecondUser
      * - To get followings: reverse the above
      */
     List<Relation> findRelationsByUsernameAndStatuses(
@@ -35,4 +35,7 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
     boolean existsByFirstUserUsernameAndSecondUserUsername(String first, String second);
 
     Relation findByFirstUserUsernameAndSecondUserUsername(String first, String second);
+
+
+
 }
