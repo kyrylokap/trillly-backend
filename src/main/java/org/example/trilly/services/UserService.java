@@ -7,6 +7,7 @@ import org.example.trilly.dto.user.login.LoginResponseDTO;
 import org.example.trilly.dto.user.password.ChangePasswordRequestDTO;
 import org.example.trilly.dto.user.password.ChangePasswordResponseDTO;
 import org.example.trilly.dto.user.profile.UserProfileDTO;
+import org.example.trilly.dto.user.search.UserSearchDTO;
 import org.example.trilly.models.Relation;
 import org.example.trilly.models.User;
 import org.example.trilly.models.enums.RelationStatus;
@@ -90,4 +91,9 @@ public class UserService {
         return userProfile;
     }
 
+    public List<UserSearchDTO>searchAllLikeUsername(String username){
+        return userRepository.searchAllByUsernameStartingWith(username).stream().map((user ->
+                UserSearchDTO.builder().username(user.getUsername()).build()
+        )).toList();
+    }
 }

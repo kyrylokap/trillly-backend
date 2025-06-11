@@ -1,11 +1,13 @@
 package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
+import lombok.experimental.Delegate;
 import org.example.trilly.dto.user.login.LoginRequestDTO;
 import org.example.trilly.dto.user.login.LoginResponseDTO;
 import org.example.trilly.dto.user.password.ChangePasswordRequestDTO;
 import org.example.trilly.dto.user.password.ChangePasswordResponseDTO;
 import org.example.trilly.dto.user.profile.UserProfileDTO;
+import org.example.trilly.dto.user.search.UserSearchDTO;
 import org.example.trilly.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +39,10 @@ public class UserController {
     @GetMapping("/user/{username}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable String username){
         return ResponseEntity.ok(userService.getUserProfile(username));
+    }
+
+    @GetMapping("/users/{username}")
+    public ResponseEntity<List<UserSearchDTO>> searchUsers(@PathVariable String username){
+        return ResponseEntity.ok(userService.searchAllLikeUsername(username));
     }
 }
