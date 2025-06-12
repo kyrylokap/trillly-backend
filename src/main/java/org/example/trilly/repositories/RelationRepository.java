@@ -36,6 +36,14 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
 
     Relation findByFirstUserUsernameAndSecondUserUsername(String first, String second);
 
-
+    @Query("""
+    SELECT COUNT(r) > 0 FROM Relation r 
+    WHERE r.firstUser.username = :username 
+      AND r.secondUser.username = :another 
+      AND r.relationStatus IN :relations
+    """)
+    boolean isFollowedOn(@Param("username") String username,
+                         @Param("another") String another,
+                         @Param("relations") List<RelationStatus> relations);
 
 }

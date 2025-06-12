@@ -9,6 +9,7 @@ import org.example.trilly.repositories.RelationRepository;
 import org.example.trilly.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -73,10 +74,10 @@ public class RelationService {
         relationRepository.save(rel2);
     }
 
-    public List<RelationResponseDTO> getUserFollowers(RelationRequestDTO request){
+    public List<RelationResponseDTO> getUserFollowers(String username){
        return mapListToListDTO(
-               relationRepository.findRelationsByUsernameAndStatuses(request.getFirstUsername(),
-                getFirstTypeRelationStatus()), request.getFirstUsername());
+               relationRepository.findRelationsByUsernameAndStatuses(username,
+                getFirstTypeRelationStatus()),username);
     }
 
     public List<RelationResponseDTO> getUserFollowings(RelationRequestDTO request){
@@ -106,5 +107,9 @@ public class RelationService {
 
     private List<RelationStatus> getSecondTypeRelationStatus(){
         return List.of(RelationStatus.FRIEND,RelationStatus.FOLLOWING);
+    }
+
+    public boolean checkFollow(String firstUsername, String secondUsername){
+        return relationRepository.isFollowedOn(firstUsername, secondUsername, List.of(RelationStatus.FOLLOWING, RelationStatus.FRIEND));
     }
 }

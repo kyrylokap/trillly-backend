@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class RelationRequestDTO {
+public class RelationRequestDTO{
     private String firstUsername;
     private String secondUsername;
-
 }

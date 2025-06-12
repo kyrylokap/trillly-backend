@@ -1,7 +1,6 @@
 package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
-import lombok.experimental.Delegate;
 import org.example.trilly.dto.user.login.LoginRequestDTO;
 import org.example.trilly.dto.user.login.LoginResponseDTO;
 import org.example.trilly.dto.user.password.ChangePasswordRequestDTO;
@@ -41,6 +40,10 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserProfile(username));
     }
 
+
+    /*
+    * method searchUsers search all users starts with searchUsername and user with username "username" have not blocked
+    * */
     @GetMapping("/users/{username}")
     public ResponseEntity<List<UserSearchDTO>> searchUsers(@PathVariable String username){
         return ResponseEntity.ok(userService.searchAllLikeUsername(username));

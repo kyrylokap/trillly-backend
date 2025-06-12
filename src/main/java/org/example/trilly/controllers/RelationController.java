@@ -15,20 +15,10 @@ import java.util.List;
 public class RelationController{
     private final RelationService relationService;
     @GetMapping("/user/followers")
-    public ResponseEntity<List<RelationResponseDTO>> getUserFollowers(@RequestBody RelationRequestDTO request){
-        return ResponseEntity.ok(relationService.getUserFollowers(request));
+    public ResponseEntity<List<RelationResponseDTO>> getUserFollowers(@RequestParam String username){
+        return ResponseEntity.ok(relationService.getUserFollowers(username));
     }
 
-    @GetMapping("/user/followings")
-    public ResponseEntity<List<RelationResponseDTO>> getUserFollowings(@RequestBody RelationRequestDTO request){
-        return ResponseEntity.ok(relationService.getUserFollowings(request));
-    }
-
-    @PutMapping("/user/follow")
-    public ResponseEntity<Void> followUser(@RequestBody RelationRequestDTO request){
-        relationService.follow(request);
-        return ResponseEntity.ok().build();
-    }
 
     @PutMapping("/user/unFollow")
     public ResponseEntity<Void> unfollowUser(@RequestBody RelationRequestDTO request){
@@ -46,5 +36,11 @@ public class RelationController{
     public ResponseEntity<Void> unblockUser(@RequestBody RelationRequestDTO request){
         relationService.unblock(request);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user/checkFollow")
+    public ResponseEntity<Boolean> checkFollow(@RequestParam String firstUsername,
+                                               @RequestParam String secondUsername){
+        return ResponseEntity.ok(relationService.checkFollow(firstUsername, secondUsername));
     }
 }
