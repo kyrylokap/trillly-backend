@@ -19,6 +19,11 @@ public class RelationController{
         return ResponseEntity.ok(relationService.getUserFollowers(username));
     }
 
+    @PutMapping("/user/follow")
+    public ResponseEntity<Void> followUser(@RequestBody RelationRequestDTO request){
+        relationService.follow(request);
+        return ResponseEntity.ok().build();
+    }
 
     @PutMapping("/user/unFollow")
     public ResponseEntity<Void> unfollowUser(@RequestBody RelationRequestDTO request){
