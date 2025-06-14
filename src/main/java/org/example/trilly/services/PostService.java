@@ -19,14 +19,12 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
+    public List<PostResponseDTO> getRandomPosts(){
+        return postRepository.findRandomPosts().stream().map(this::mapToDTO).toList();
+    }
     public List<PostResponseDTO> getUserPosts(String username){
         Long userId = userRepository.findByUsername(username).getId();
-        List<PostResponseDTO> posts = new ArrayList<>();
-        postRepository.getAllByUserIdOrderByPostTimeDesc(userId).forEach(p -> {
-            posts.add(mapToDTO(p));
-        });
-
-        return posts;
+        return postRepository.getAllByUserIdOrderByPostTimeDesc(userId).stream().map(this::mapToDTO).toList();
     }
 
     public void addPost(String username, PostDTO postDTO){

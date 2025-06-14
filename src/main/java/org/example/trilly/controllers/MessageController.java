@@ -20,7 +20,7 @@ public class MessageController{
         return messageService.getMessagesByChatId(chatId);
     }
     @PostMapping("/{chatId}/messages")
-    public ResponseEntity<Void> sendMessage(@PathVariable Long chatId, //Message response will change on dto
+    public ResponseEntity<Void> sendMessage(@PathVariable Long chatId,
                                                @RequestBody MessageDTO message){
         messageService.sendMessage(message, chatId);
         return  ResponseEntity.ok().build();

@@ -12,4 +12,8 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     List<Post> getAllByUserIdOrderByPostTimeDesc(Long id);
 
+
+    @Query(value = "SELECT * FROM posts ORDER BY  random() LIMIT 10",nativeQuery = true)
+    List<Post> findRandomPosts();
+
 }

@@ -27,4 +27,9 @@ public class PostController {
         postService.addPost(username, post);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostResponseDTO>> randomPosts(){
+        return ResponseEntity.ok(postService.getRandomPosts());
+    }
 }
