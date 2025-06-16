@@ -37,7 +37,7 @@ public class ChatService {
         List<Message> messages = c.getMessages().stream().sorted(Comparator.comparing(Message::getTime)).toList();
 
         String lastMessage = messages.isEmpty() ? "" : messages.get(messages.size() - 1).getText();
-        lastMessage = lastMessage.length() > 20 ? lastMessage.substring(0,20) + "..." : lastMessage;
+        lastMessage = lastMessage.length() > 10 ? lastMessage.substring(0,10) + "..." : lastMessage;
 
         List<String> usernames = c.getMembers().stream()
                 .map(User::getUsername).toList();
