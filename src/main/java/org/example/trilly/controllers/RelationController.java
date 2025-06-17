@@ -19,6 +19,11 @@ public class RelationController{
         return ResponseEntity.ok(relationService.getUserFollowers(username));
     }
 
+    @GetMapping("/user/followings")
+    public ResponseEntity<List<RelationResponseDTO>> getUserFollowings(@RequestParam String username){
+        return ResponseEntity.ok(relationService.getUserFollowings(username));
+    }
+
     @PutMapping("/user/follow")
     public ResponseEntity<Void> followUser(@RequestBody RelationRequestDTO request){
         relationService.follow(request);

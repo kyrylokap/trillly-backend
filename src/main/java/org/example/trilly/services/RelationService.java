@@ -80,10 +80,10 @@ public class RelationService {
                 getFirstTypeRelationStatus()),username);
     }
 
-    public List<RelationResponseDTO> getUserFollowings(RelationRequestDTO request){
+    public List<RelationResponseDTO> getUserFollowings(String username){
         return mapListToListDTO(
-                relationRepository.findRelationsByUsernameAndStatuses(request.getFirstUsername(),
-                getSecondTypeRelationStatus()), request.getFirstUsername()
+                relationRepository.findRelationsByUsernameAndStatuses(username,
+                getSecondTypeRelationStatus()),username
         );
     }
 
