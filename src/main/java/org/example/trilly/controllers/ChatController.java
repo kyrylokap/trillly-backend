@@ -24,4 +24,9 @@ public class ChatController{
         return ResponseEntity.ok(chatService.getChatByUsername(finderUsername, foundUsername));
     }
 
+    @GetMapping("/chats/find")
+    public ResponseEntity<ChatResponseDTO> findChatById(@RequestParam Long id){
+        return ResponseEntity.ok(chatService.getChatById(id));
+    }
+
 }

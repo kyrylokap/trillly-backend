@@ -22,10 +22,12 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
             SELECT c FROM Chat c
             JOIN c.members m1
             JOIN c.members m2
-            WHERE m1.username = :finder AND m2.username = :found
-           
+            WHERE m1.username = :finder 
+                AND m2.username LIKE CONCAT(:found, '%')
+                AND m1.username <> m2.username
             """)
     List<Chat> getChatByFinderAndFound(@Param("finder") String finder,
                                  @Param("found") String found);
+
     Chat getChatById(Long id);
 }
