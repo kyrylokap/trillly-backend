@@ -37,8 +37,9 @@ public class RelationController{
     }
 
     @PutMapping("/user/block")
-    public ResponseEntity<Void> blockUser(@RequestBody RelationRequestDTO request){
-        relationService.block(request);
+    public ResponseEntity<Void> blockUser(@RequestParam String username,
+                                          @RequestParam String profileUsername){
+        relationService.block(username,profileUsername);
         return ResponseEntity.ok().build();
     }
 

@@ -11,9 +11,12 @@ import org.example.trilly.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @AllArgsConstructor
@@ -40,7 +43,8 @@ public class CommentService {
                 .post(postRepository.findById(postId).get())
                 .user(userRepository.findByUsername(commentDTO.getUsername()))
                 .text(commentDTO.getText())
-                .commentTime(LocalDateTime.now())
+                .commentTime(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")),
+                                                        DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")))
                 .build());
     }
     private List<CommentResponseDTO> mapCommentsToCommentsDTO(List<Comment> comments){
@@ -55,7 +59,7 @@ public class CommentService {
         return CommentResponseDTO.builder()
                 .username(comment.getUser().getUsername())
                 .text(comment.getText())
-                .commentTime(comment.getCommentTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy  hh:mm")))
+                .commentTime(comment.getCommentTime().format(DateTimeFormatter.ofPattern("dd.MM.yyyy  HH:mm")))
                 .build();
     }
 

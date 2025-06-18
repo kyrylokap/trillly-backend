@@ -22,8 +22,8 @@ public class RelationService {
 
 
 
-    public void block(RelationRequestDTO r){
-        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.BLOCKED, RelationStatus.NONE);
+    public void block(String username, String profileUsername){
+        saveRelation(username, profileUsername, RelationStatus.BLOCKED, RelationStatus.NONE);
     }
 
     public void unblock(RelationRequestDTO r){
