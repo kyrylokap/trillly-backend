@@ -91,9 +91,11 @@ public class UserService {
         return userProfile;
     }
 
-    public List<UserSearchDTO>searchAllLikeUsername(String username){
-        return userRepository.searchAllByUsernameStartingWith(username).stream().map((user ->
-                UserSearchDTO.builder().username(user.getUsername()).build()
+    public List<UserSearchDTO>searchAllLikeUsername(String username, String usernameToFind){
+        return userRepository.searchAllByUsernameStartingWith(usernameToFind).stream().filter((user ->
+                        !relationRepository.isBlocked(username, user.getUsername(), RelationStatus.BLOCKED)
+        ))
+                .map((user -> UserSearchDTO.builder().username(user.getUsername()).build()
         )).toList();
     }
 }

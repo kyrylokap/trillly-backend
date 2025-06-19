@@ -36,6 +36,12 @@ public class RelationController{
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/user/checkFollow")
+    public ResponseEntity<Boolean> checkFollow(@RequestParam String firstUsername,
+                                               @RequestParam String secondUsername){
+        return ResponseEntity.ok(relationService.checkFollow(firstUsername, secondUsername));
+    }
+
     @PutMapping("/user/block")
     public ResponseEntity<Void> blockUser(@RequestParam String username,
                                           @RequestParam String profileUsername){
@@ -44,14 +50,15 @@ public class RelationController{
     }
 
     @PutMapping("/user/unblock")
-    public ResponseEntity<Void> unblockUser(@RequestBody RelationRequestDTO request){
-        relationService.unblock(request);
+    public ResponseEntity<Void> unblockUser(@RequestParam String username,
+                                            @RequestParam String profileUsername){
+        relationService.unblock(username,profileUsername);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/user/checkFollow")
-    public ResponseEntity<Boolean> checkFollow(@RequestParam String firstUsername,
-                                               @RequestParam String secondUsername){
-        return ResponseEntity.ok(relationService.checkFollow(firstUsername, secondUsername));
+    @GetMapping("/user/checkBlock")
+    public ResponseEntity<Boolean> getBlockStatus(@RequestParam String username,
+                                                  @RequestParam String profileUsername){
+        return ResponseEntity.ok(relationService.isBlocked(username,profileUsername));
     }
 }

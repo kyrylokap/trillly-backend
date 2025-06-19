@@ -46,4 +46,12 @@ public interface RelationRepository extends JpaRepository<Relation, Long> {
                          @Param("another") String another,
                          @Param("relations") List<RelationStatus> relations);
 
+    @Query("""
+    SELECT COUNT(r) > 0 FROM Relation r 
+    WHERE r.firstUser.username = :username 
+      AND r.secondUser.username = :profileUsername 
+      AND r.relationStatus IN :relation
+    """)
+    boolean isBlocked(@Param("username") String username, @Param("profileUsername") String profileUsername,
+                                    @Param("relation") RelationStatus relation);
 }

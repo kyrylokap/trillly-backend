@@ -44,8 +44,8 @@ public class UserController {
     /*
     * method searchUsers search all users starts with searchUsername and user with username "username" have not blocked
     * */
-    @GetMapping("/users/{username}")
-    public ResponseEntity<List<UserSearchDTO>> searchUsers(@PathVariable String username){
-        return ResponseEntity.ok(userService.searchAllLikeUsername(username));
+    @GetMapping("/users/{usernameToFind}")
+    public ResponseEntity<List<UserSearchDTO>> searchUsers(@RequestParam String username,@PathVariable String usernameToFind){
+        return ResponseEntity.ok(userService.searchAllLikeUsername(username, usernameToFind));
     }
 }

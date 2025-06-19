@@ -26,8 +26,8 @@ public class RelationService {
         saveRelation(username, profileUsername, RelationStatus.BLOCKED, RelationStatus.NONE);
     }
 
-    public void unblock(RelationRequestDTO r){
-        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.NONE, RelationStatus.NONE);
+    public void unblock(String username,  String profileUsername){
+        saveRelation(username, profileUsername, RelationStatus.NONE, RelationStatus.NONE);
     }
 
     public void follow(RelationRequestDTO r) {
@@ -111,5 +111,9 @@ public class RelationService {
 
     public boolean checkFollow(String firstUsername, String secondUsername){
         return relationRepository.isFollowedOn(firstUsername, secondUsername, List.of(RelationStatus.FOLLOWING, RelationStatus.FRIEND));
+    }
+
+    public boolean isBlocked( String username, String profileUsername){
+        return relationRepository.isBlocked(username, profileUsername, RelationStatus.BLOCKED);
     }
 }
