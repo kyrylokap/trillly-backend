@@ -21,12 +21,18 @@ public class ChatController{
     @GetMapping("/chats/{finderUsername}/{foundUsername}")   //End-point for search chat by entering username
     public ResponseEntity<List<ChatResponseDTO>> getChatBySearching(@PathVariable String finderUsername,
                                              @PathVariable String foundUsername){
-        return ResponseEntity.ok(chatService.getChatByUsername(finderUsername, foundUsername));
+        return ResponseEntity.ok(chatService.getChatsByUsername(finderUsername, foundUsername));
     }
 
     @GetMapping("/chats/find")
     public ResponseEntity<ChatResponseDTO> findChatById(@RequestParam Long id){
         return ResponseEntity.ok(chatService.getChatById(id));
     }
+    @GetMapping("/users/getChat")
+    public ResponseEntity<ChatResponseDTO> createChat(@RequestParam String firstUsername,
+                                                      @RequestParam String secondUsername){
+        return ResponseEntity.ok(chatService.createAndGetChat(firstUsername, secondUsername));
+    }
+
 
 }
