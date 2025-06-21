@@ -35,6 +35,13 @@ public class UserController {
         return ResponseEntity.ok(userService.changePassword(changePasswordDTO));
     }
 
+    @PutMapping("/user/changeUsername")
+    public ResponseEntity<String> changeUsername(@RequestParam String oldUsername,
+                                               @RequestParam String newUsername){
+
+        return ResponseEntity.ok(userService.changeUsername(oldUsername, newUsername));
+    }
+
     @GetMapping("/user/{username}")
     public ResponseEntity<UserProfileDTO> getUserProfile(@PathVariable String username){
         return ResponseEntity.ok(userService.getUserProfile(username));

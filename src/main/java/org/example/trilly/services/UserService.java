@@ -58,8 +58,21 @@ public class UserService {
             responseDTO = ChangePasswordResponseDTO.builder().changePasswordMessage("Successfully changed password!").build();
             userRepository.save(user);
         }
-
         return responseDTO;
+    }
+    public String changeUsername(String oldUsername, String newUsername){
+        if(oldUsername.equals(newUsername)){
+            return "Old and new username are equal, try other username";
+        }if(userRepository.findByUsername(newUsername) != null){
+            return "User with new username already exists, try other username!";
+        }if(newUsername.length() < 3){
+            return "Provided username are very small, minimum length is 3";
+        }
+        var user = userRepository.findByUsername(oldUsername);
+        user.setUsername(newUsername);
+        userRepository.save(user);
+
+        return oldUsername + " successfully changed username on " + newUsername;
     }
 
     public UserProfileDTO getUserProfile(String username){
