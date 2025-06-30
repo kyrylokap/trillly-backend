@@ -17,4 +17,5 @@ public class MessagesResponseDTO{
     private List<String> messages;
     private List<String> times;
     private List<String> senders;
+    private List<String> types;
 }

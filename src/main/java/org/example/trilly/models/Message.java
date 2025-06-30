@@ -28,5 +28,8 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private User sender;
+
+    @Column(name = "type")
+    private String type;
 }
 

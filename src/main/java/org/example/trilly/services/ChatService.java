@@ -61,16 +61,18 @@ public class ChatService {
 
     private ChatResponseDTO mapToDTO(Chat c, String username){
         List<Message> messages = c.getMessages().stream().sorted(Comparator.comparing(Message::getTime)).toList();
+        Message lastMSG = messages.isEmpty() ? null : messages.get(messages.size() - 1);
 
-        String lastMessage = messages.isEmpty() ? "" : messages.get(messages.size() - 1).getText();
-        lastMessage = lastMessage.length() > 10 ? lastMessage.substring(0,10) + "..." : lastMessage;
+        String lastMessageText = lastMSG == null ? "" :lastMSG.getText();
+        lastMessageText = lastMessageText.length() > 10 ? lastMessageText.substring(0,10) + "..." : lastMessageText;
 
         List<String> usernames = c.getMembers().stream().filter(user -> !user.getUsername().equals(username))
                 .map(User::getUsername).toList();
 
         return ChatResponseDTO.builder()
                 .chatId(c.getId())
-                .lastMessage(lastMessage)
+                .lastMessage(lastMessageText)
+                .lastMessageType(lastMSG == null ? "" : lastMSG.getType())
                 .usernames(usernames)
                 .build();
     }

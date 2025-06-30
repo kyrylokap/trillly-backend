@@ -14,5 +14,6 @@ import java.util.List;
 public class ChatResponseDTO {
     private Long chatId;
     private String lastMessage;
+    private String lastMessageType;
     private List<String> usernames;
 }

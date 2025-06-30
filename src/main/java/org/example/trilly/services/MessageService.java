@@ -26,17 +26,18 @@ public class MessageService {
         List<String> messages = new ArrayList<>();
         List<String> times = new ArrayList<>();
         List<String> senders = new ArrayList<>();
+        List<String> types = new ArrayList<>();
         messageRepository.getMessagesByChatId(chatId).forEach(message -> {
             messages.add(message.getText());
-
+            types.add(message.getType());
             String time = message.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
             times.add(time);
-
             senders.add(message.getSender().getUsername());
         });
         return MessagesResponseDTO.builder()
                 .messages(messages)
                 .times(times)
+                .types(types)
                 .senders(senders).build();
     }
 
@@ -46,6 +47,7 @@ public class MessageService {
                 Message.builder().text(message.getText())
                         .time(LocalDateTime.now())
                         .chat(chatRepository.findById(chatId).get())
+                        .type(message.getType())
                         .sender(userRepository.findByUsername(message.getSender()))
                         .build());
     }
