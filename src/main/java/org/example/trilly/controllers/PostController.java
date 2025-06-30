@@ -32,9 +32,4 @@ public class PostController {
     public ResponseEntity<List<PostResponseDTO>> randomPosts(){
         return ResponseEntity.ok(postService.getRandomPosts());
     }
-
-    @GetMapping("/posts/{postId}")
-    public ResponseEntity<String> getPostUrlById(@PathVariable String postId){
-        return ResponseEntity.ok(postService.getPostUrlById(postId));
-    }
 }

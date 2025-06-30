@@ -27,9 +27,6 @@ public class PostService {
         return postRepository.getAllByUserIdOrderByPostTimeDesc(userId).stream().map(this::mapToDTO).toList();
     }
 
-    public String getPostUrlById(String postId){
-        return postRepository.findById(Long.parseLong(postId)).get().getMediaUrl();
-    }
     public void addPost(String username, PostDTO postDTO){
         var post = Post.builder()
                 .description(postDTO.getDescription())
