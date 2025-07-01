@@ -19,17 +19,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/user/register")
-    public ResponseEntity<LoginResponseDTO> registerUser(@RequestBody LoginRequestDTO requestDTO){
-        return ResponseEntity.ok(userService.registerUser(requestDTO));
-    }
-
-
-    @PostMapping("/user/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO requestDTO){
-        return ResponseEntity.ok(userService.login(requestDTO));
-    }
-
     @PutMapping("/user/changePassword")
     public ResponseEntity<ChangePasswordResponseDTO> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordDTO){
         return ResponseEntity.ok(userService.changePassword(changePasswordDTO));

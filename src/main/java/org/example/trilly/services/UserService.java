@@ -14,6 +14,7 @@ import org.example.trilly.models.enums.RelationStatus;
 import org.example.trilly.repositories.PostRepository;
 import org.example.trilly.repositories.RelationRepository;
 import org.example.trilly.repositories.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,23 +27,27 @@ public class UserService {
     private final UserRepository userRepository;
     private final RelationRepository relationRepository;
     private final PostRepository postRepository;
+    private final PasswordEncoder passwordEncoder;
     public LoginResponseDTO registerUser(LoginRequestDTO request){
         if(!userRepository.existsByUsername(request.getUsername())){
             var user = User.builder().role("USER")
-                    .password(request.getPassword())
+                    .password(passwordEncoder.encode(request.getPassword()))
                     .username(request.getUsername())
                     .createdAt(LocalDateTime.now()).build();
             userRepository.save(user);
-            return LoginResponseDTO.builder().username(user.getUsername()).build();
+            return LoginResponseDTO.builder().(user.getUsername()).build();
         }
         return null;
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public LoginResponseDTO login(LoginRequestDTO request){
-        var user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
-        return user == null ? null : LoginResponseDTO.builder()
-                .username(user.getUsername())
-                .build();
+        var user = userRepository.findByUsername(request.getUsername());
+        if(user == null || passwordEncoder.matches(request.getPassword(), user.getPassword()))return null;
+        return LoginResponseDTO.builder().username(user.getUsername()).build();
     }
 
     public ChangePasswordResponseDTO changePassword(ChangePasswordRequestDTO dto){
