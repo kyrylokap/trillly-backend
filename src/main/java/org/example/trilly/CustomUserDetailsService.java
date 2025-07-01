@@ -3,10 +3,13 @@ package org.example.trilly;
 import lombok.AllArgsConstructor;
 import org.example.trilly.models.User;
 import org.example.trilly.repositories.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -15,7 +18,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User u = userRepository.findByUsername(username);
-        return new CustomUserDetails(u);
+        User user = userRepository.findByUsername(username);
+        if (user == null) throw new UsernameNotFoundException("User not found");
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                List.of(new SimpleGrantedAuthority(user.getRole()))
+        );
     }
 }

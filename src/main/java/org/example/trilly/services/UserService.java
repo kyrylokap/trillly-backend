@@ -35,7 +35,7 @@ public class UserService {
                     .username(request.getUsername())
                     .createdAt(LocalDateTime.now()).build();
             userRepository.save(user);
-            return LoginResponseDTO.builder().(user.getUsername()).build();
+            return LoginResponseDTO.builder().username(user.getUsername()).build();
         }
         return null;
     }
