@@ -9,6 +9,8 @@ import org.example.trilly.dto.user.profile.UserProfileDTO;
 import org.example.trilly.dto.user.search.UserSearchDTO;
 import org.example.trilly.services.UserService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,13 +23,15 @@ public class UserController {
 
     @PutMapping("/user/changePassword")
     public ResponseEntity<ChangePasswordResponseDTO> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordDTO){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        changePasswordDTO.setUsername(auth.getName());
         return ResponseEntity.ok(userService.changePassword(changePasswordDTO));
     }
 
     @PutMapping("/user/changeUsername")
-    public ResponseEntity<String> changeUsername(@RequestParam String oldUsername,
-                                               @RequestParam String newUsername){
-
+    public ResponseEntity<String> changeUsername(@RequestParam String newUsername){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String oldUsername = auth.getName();
         return ResponseEntity.ok(userService.changeUsername(oldUsername, newUsername));
     }
 
@@ -41,7 +45,8 @@ public class UserController {
     * method searchUsers search all users starts with searchUsername and user with username "username" have not blocked
     * */
     @GetMapping("/users/{usernameToFind}")
-    public ResponseEntity<List<UserSearchDTO>> searchUsers(@RequestParam String username,@PathVariable String usernameToFind){
+    public ResponseEntity<List<UserSearchDTO>> searchUsers(@PathVariable String usernameToFind){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(userService.searchAllLikeUsername(username, usernameToFind));
     }
 }

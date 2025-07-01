@@ -7,6 +7,7 @@ import org.example.trilly.dto.message.MessagesResponseDTO;
 import org.example.trilly.services.MessageService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -22,12 +23,14 @@ public class MessageController{
     @PostMapping("/{chatId}/messages")
     public ResponseEntity<Void> sendMessage(@PathVariable Long chatId,
                                                @RequestBody MessageDTO message){
+        message.setSender(SecurityContextHolder.getContext().getAuthentication().getName());
         messageService.sendMessage(message, chatId);
         return  ResponseEntity.ok().build();
     }
     @PutMapping("/{chatId}/messages")
     public ResponseEntity<Void> changeMessage(@PathVariable Long chatId,
                                                  @RequestBody MessageDTO message){
+        message.setSender(SecurityContextHolder.getContext().getAuthentication().getName());
         messageService.changeMessage(message, chatId);
         return ResponseEntity.ok().build();
     }

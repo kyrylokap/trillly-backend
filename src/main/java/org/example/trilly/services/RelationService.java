@@ -30,17 +30,18 @@ public class RelationService {
         saveRelation(username, profileUsername, RelationStatus.NONE, RelationStatus.NONE);
     }
 
-    public void follow(RelationRequestDTO r) {
-        Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(r.getFirstUsername(),r.getSecondUsername());
+    public void follow(String firstUsername, String secondUsername) {
+
+        Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(firstUsername,secondUsername);
         if(relation != null && relation.getRelationStatus() == RelationStatus.FOLLOWED){
-            saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FRIEND, RelationStatus.FRIEND);
+            saveRelation(firstUsername,secondUsername, RelationStatus.FRIEND, RelationStatus.FRIEND);
             return;
         }
-        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.FOLLOWING, RelationStatus.FOLLOWED);
+        saveRelation(firstUsername,secondUsername, RelationStatus.FOLLOWING, RelationStatus.FOLLOWED);
     }
 
-    public void unfollow(RelationRequestDTO r){
-        Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(r.getFirstUsername(),r.getSecondUsername());
+    public void unfollow(String firstUsername, String secondUsername){
+        Relation relation = relationRepository.findByFirstUserUsernameAndSecondUserUsername(firstUsername,secondUsername);
 
         RelationStatus relationStatus = null ;
         if(relation.getRelationStatus() == RelationStatus.FRIEND){
@@ -48,7 +49,7 @@ public class RelationService {
         }else if(relation.getRelationStatus() == RelationStatus.FOLLOWING){
             relationStatus = RelationStatus.NONE;
         }
-        saveRelation(r.getFirstUsername(), r.getSecondUsername(), RelationStatus.NONE, relationStatus);
+        saveRelation(firstUsername, secondUsername, RelationStatus.NONE, relationStatus);
     }
 
     private void saveRelation(String first, String second, RelationStatus relS1, RelationStatus relS2){

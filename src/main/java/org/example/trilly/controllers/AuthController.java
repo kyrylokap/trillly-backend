@@ -1,6 +1,7 @@
 package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
+import org.example.trilly.CustomUserDetails;
 import org.example.trilly.dto.user.login.LoginRequestDTO;
 import org.example.trilly.dto.user.login.LoginResponseDTO;
 import org.example.trilly.jwt.JWTService;
@@ -34,7 +35,8 @@ public class AuthController {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(requestDTO.getUsername(), requestDTO.getPassword())
         );
-        User user = (User) authentication.getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails)authentication.getPrincipal();
+        User user = customUserDetails.getUser();
         String token = jwtService.generateToken(user);
 
         return ResponseEntity.ok(Map.of("username", user.getUsername(), "token", token));

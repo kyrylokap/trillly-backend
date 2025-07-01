@@ -6,6 +6,7 @@ import org.example.trilly.dto.post.PostResponseDTO;
 import org.example.trilly.models.Post;
 import org.example.trilly.services.PostService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,9 +22,9 @@ public class PostController {
         return ResponseEntity.ok(postService.getUserPosts(username));
     }
 
-    @PostMapping("/{username}/post")
-    public ResponseEntity<Void> addPost(@PathVariable String username,
-                                        @RequestBody PostDTO post){
+    @PostMapping("/user/post")
+    public ResponseEntity<Void> addPost(@RequestBody PostDTO post){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         postService.addPost(username, post);
         return ResponseEntity.ok().build();
     }

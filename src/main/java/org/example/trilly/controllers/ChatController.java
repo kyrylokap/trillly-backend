@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.example.trilly.dto.chat.ChatResponseDTO;
 import org.example.trilly.services.ChatService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,13 +15,14 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ChatController{
     private final ChatService chatService;
-    @GetMapping("/users/{username}/chats")       //End-point for user CHATS
-    public ResponseEntity<List<ChatResponseDTO>> getMyChats(@PathVariable String username){
+    @GetMapping("/users/user/chats")       //ok
+    public ResponseEntity<List<ChatResponseDTO>> getMyChats(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(chatService.getMyAllChats(username));
     }
-    @GetMapping("/chats/{finderUsername}/{foundUsername}")   //End-point for search chat by entering username
-    public ResponseEntity<List<ChatResponseDTO>> getChatBySearching(@PathVariable String finderUsername,
-                                             @PathVariable String foundUsername){
+    @GetMapping("/chats/user/{foundUsername}")   //ok
+    public ResponseEntity<List<ChatResponseDTO>> getChatBySearching(@PathVariable String foundUsername){
+        String finderUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(chatService.getChatsByUsername(finderUsername, foundUsername));
     }
 
@@ -29,8 +31,8 @@ public class ChatController{
         return ResponseEntity.ok(chatService.getChatById(id));
     }
     @GetMapping("/users/getChat")
-    public ResponseEntity<ChatResponseDTO> createChat(@RequestParam String firstUsername,
-                                                      @RequestParam String secondUsername){
+    public ResponseEntity<ChatResponseDTO> createChat(@RequestParam String secondUsername){
+        String firstUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(chatService.createAndGetChat(firstUsername, secondUsername));
     }
 
