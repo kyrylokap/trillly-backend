@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class LoginResponseDTO {
-    private String token;
+    private String username;
 }

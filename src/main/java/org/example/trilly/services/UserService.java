@@ -44,12 +44,6 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    public LoginResponseDTO login(LoginRequestDTO request){
-        var user = userRepository.findByUsername(request.getUsername());
-        if(user == null || passwordEncoder.matches(request.getPassword(), user.getPassword()))return null;
-        return LoginResponseDTO.builder().username(user.getUsername()).build();
-    }
-
     public ChangePasswordResponseDTO changePassword(ChangePasswordRequestDTO dto){
         User user = userRepository.findByUsername(dto.getUsername());
         ChangePasswordResponseDTO responseDTO;

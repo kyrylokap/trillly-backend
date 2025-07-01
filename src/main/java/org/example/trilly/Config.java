@@ -29,12 +29,12 @@ public class Config {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
          http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/user/login", "/api/v1/user/register").permitAll()
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(customUserDetailsService);
 
-         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
