@@ -12,20 +12,30 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
-public class PositionService {
+public class PositionService{
     private final PositionRepository positionRepository;
     private final UserRepository userRepository;
 
-    public String addPositionToUser(String username, Double longitude, Double latitude){
-        var user = userRepository.findByUsername(username);
-        var position = Position.builder()
-                .longitude(longitude).latitude(latitude)
-                .user(user).dateTime(LocalDateTime.now()).build();
-        positionRepository.save(position);
-        return "Added ";
+    public void addPositionToUser(String username, Double longitude, Double latitude){
+        if(checkIfExistsLastFive(username, longitude, latitude)){
+            var user = userRepository.findByUsername(username);
+            var position = Position.builder()
+                    .longitude(longitude).latitude(latitude)
+                    .user(user).dateTime(LocalDateTime.now()).build();
+
+            positionRepository.save(position);
+        }
+    }
+
+    private boolean checkIfExistsLastFive(String username, Double longitude, Double latitude){
+        return positionRepository.findTop5ByUserUsernameOrderByDateTimeDesc(username).stream().noneMatch(position ->
+                Objects.equals(position.getLongitude(), longitude) &&
+                        Objects.equals(position.getLatitude(), latitude)
+        );
     }
 
     public List<PositionDTO> posesToday(String username){
@@ -35,7 +45,11 @@ public class PositionService {
     public PositionDTO mapToDTO(Position pos){
         return PositionDTO.builder()
                 .longitude(pos.getLongitude()).latitude(pos.getLatitude())
-                .time(pos.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")))
+                .time(pos.getDateTime().format(DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")))
                 .build();
+    }
+    public PositionDTO getLastUserPos(String username){
+        var pos = positionRepository.findFirstByUserUsernameOrderByDateTimeDesc(username);
+        return pos == null ? null :mapToDTO(pos);
     }
 }

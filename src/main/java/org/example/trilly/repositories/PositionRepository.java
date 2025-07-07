@@ -12,4 +12,8 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
     List<Position> getAllByUser(User user);
 
     List<Position> getAllByDateTimeAfterAndUser(LocalDateTime localDateTime, User user);
+
+    Position findFirstByUserUsernameOrderByDateTimeDesc(String username);
+
+    List<Position> findTop5ByUserUsernameOrderByDateTimeDesc(String username);
 }
