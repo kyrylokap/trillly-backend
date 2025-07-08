@@ -5,7 +5,9 @@ import org.example.trilly.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.parameters.P;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface PositionRepository extends JpaRepository<Position, Long> {
@@ -15,5 +17,5 @@ public interface PositionRepository extends JpaRepository<Position, Long> {
 
     Position findFirstByUserUsernameOrderByDateTimeDesc(String username);
 
-    List<Position> findTop5ByUserUsernameOrderByDateTimeDesc(String username);
+    List<Position> findTop5ByUserUsernameAndDateTimeBetweenOrderByDateTimeDesc(String username, LocalDateTime start, LocalDateTime end);
 }

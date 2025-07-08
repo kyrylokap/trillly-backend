@@ -30,7 +30,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     public LoginResponseDTO registerUser(LoginRequestDTO request){
         if(!userRepository.existsByUsername(request.getUsername())){
-            var user = User.builder().role("USER")
+            var user = User.builder().role("ROLE_USER")
                     .password(passwordEncoder.encode(request.getPassword()))
                     .username(request.getUsername())
                     .createdAt(LocalDateTime.now()).build();

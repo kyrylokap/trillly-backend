@@ -25,18 +25,17 @@ public class Oauth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String username = oAuth2User.getName();
+        String username = oAuth2User.getAttribute("name");
 
         User user = userRepository.findByUsername(username);
         user = user == null ? User.builder()
-                                    .username(username).createdAt(LocalDateTime.now())
+                                    .username(username).role("ROLE_USER").password("").createdAt(LocalDateTime.now())
                                     .build() : user;
         userRepository.save(user);
 
         String token = jwtService.generateToken(user);
 
-        response.setContentType("application/json");
-        response.getWriter().write("{\"token\": \"" + token + "\"}");
-        response.getWriter().flush();
+        String redirectUrl = "http://localhost:3000/oauth2/success?token=" + token + "&username=" + user.getUsername();
+        getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
 }

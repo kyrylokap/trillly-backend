@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,11 @@ public class PositionService{
     }
 
     private boolean checkIfExistsLastFive(String username, Double longitude, Double latitude){
-        return positionRepository.findTop5ByUserUsernameOrderByDateTimeDesc(username).stream().noneMatch(position ->
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay = startOfDay.plusDays(1);
+        return positionRepository
+                .findTop5ByUserUsernameAndDateTimeBetweenOrderByDateTimeDesc(username, startOfDay, endOfDay)
+                .stream().noneMatch(position ->
                 Objects.equals(position.getLongitude(), longitude) &&
                         Objects.equals(position.getLatitude(), latitude)
         );
