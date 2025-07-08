@@ -3,6 +3,7 @@ package org.example.trilly;
 import lombok.AllArgsConstructor;
 import org.example.trilly.jwt.JWTFilter;
 import org.example.trilly.jwt.JWTService;
+import org.example.trilly.oauth2.Oauth2LoginSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -36,6 +41,7 @@ public class Config implements WebMvcConfigurer {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    private Oauth2LoginSuccessHandler successHandler;
     @Lazy
     @Autowired
     private JWTService jwtService;
@@ -48,10 +54,23 @@ public class Config implements WebMvcConfigurer {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .userDetailsService(customUserDetailsService);
+                 .oauth2Login(oauth -> oauth.successHandler(successHandler))
+                .userDetailsService(customUserDetailsService)
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
-         http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    @Bean
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        return new InMemoryClientRegistrationRepository(googleClientRegistration());
+    }
+
+    private ClientRegistration googleClientRegistration() {
+        return CommonOAuth2Provider.GOOGLE.getBuilder("google")
+                .clientId("38364540760-f62jm6fu1eq6b43qoa5r5s065r5e5r70.apps.googleusercontent.com")
+                .clientSecret("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")
+                .build();
     }
 
     public JWTFilter jwtFilter(){
