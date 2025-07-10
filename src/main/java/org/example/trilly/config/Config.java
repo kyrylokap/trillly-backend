@@ -1,6 +1,7 @@
-package org.example.trilly;
+package org.example.trilly.config;
 
 import lombok.AllArgsConstructor;
+import org.example.trilly.CustomUserDetailsService;
 import org.example.trilly.jwt.JWTFilter;
 import org.example.trilly.jwt.JWTService;
 import org.example.trilly.oauth2.Oauth2LoginSuccessHandler;
@@ -51,7 +52,7 @@ public class Config implements WebMvcConfigurer {
                  .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .requestMatchers("/api/v1/auth/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                  .oauth2Login(oauth -> oauth.successHandler(successHandler))

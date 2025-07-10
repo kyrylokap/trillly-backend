@@ -4,6 +4,7 @@ package org.example.trilly.services;
 import lombok.AllArgsConstructor;
 import org.example.trilly.dto.message.MessageDTO;
 import org.example.trilly.dto.message.MessagesResponseDTO;
+import org.example.trilly.dto.message.SocketMessageDTO;
 import org.example.trilly.models.Message;
 import org.example.trilly.repositories.ChatRepository;
 import org.example.trilly.repositories.MessageRepository;
@@ -41,7 +42,9 @@ public class MessageService {
                 .senders(senders).build();
     }
 
-    public void sendMessage(MessageDTO message, Long chatId){
+
+
+    public void sendMessage(SocketMessageDTO message, Long chatId){
 
         messageRepository.save(
                 Message.builder().text(message.getText())
