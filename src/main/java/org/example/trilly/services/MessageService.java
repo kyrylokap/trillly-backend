@@ -44,15 +44,17 @@ public class MessageService {
 
 
 
-    public void sendMessage(SocketMessageDTO message, Long chatId){
-
+    public SocketMessageDTO sendMessage(SocketMessageDTO message, Long chatId){
+        LocalDateTime time = LocalDateTime.now();
         messageRepository.save(
                 Message.builder().text(message.getText())
-                        .time(LocalDateTime.now())
+                        .time(time)
                         .chat(chatRepository.findById(chatId).get())
                         .type(message.getType())
                         .sender(userRepository.findByUsername(message.getSender()))
                         .build());
+        message.setTime(time.format(DateTimeFormatter.ofPattern("HH:mm")));
+        return message;
     }
 
     public void changeMessage(MessageDTO message, Long chatId){

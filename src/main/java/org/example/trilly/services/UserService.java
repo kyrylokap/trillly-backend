@@ -2,11 +2,11 @@ package org.example.trilly.services;
 
 import lombok.AllArgsConstructor;
 import org.example.trilly.dto.post.PostResponseDTO;
-import org.example.trilly.dto.user.login.LoginRequestDTO;
-import org.example.trilly.dto.user.login.LoginResponseDTO;
+import org.example.trilly.dto.user.register.RegisterRequestDTO;
 import org.example.trilly.dto.user.password.ChangePasswordRequestDTO;
 import org.example.trilly.dto.user.password.ChangePasswordResponseDTO;
 import org.example.trilly.dto.user.profile.UserProfileDTO;
+import org.example.trilly.dto.user.register.RegisterResponseDTO;
 import org.example.trilly.dto.user.search.UserSearchDTO;
 import org.example.trilly.models.Relation;
 import org.example.trilly.models.User;
@@ -18,7 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,16 +27,27 @@ public class UserService {
     private final RelationRepository relationRepository;
     private final PostRepository postRepository;
     private final PasswordEncoder passwordEncoder;
-    public LoginResponseDTO registerUser(LoginRequestDTO request){
-        if(!userRepository.existsByUsername(request.getUsername())){
-            var user = User.builder().role("ROLE_USER")
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .username(request.getUsername())
-                    .createdAt(LocalDateTime.now()).build();
-            userRepository.save(user);
-            return LoginResponseDTO.builder().username(user.getUsername()).build();
+    public RegisterResponseDTO registerUser(RegisterRequestDTO request){
+        if(userRepository.existsByUsername(request.getUsername())){
+            return RegisterResponseDTO.builder().message("User exists").build();
         }
-        return null;
+        if(request.getUsername().isEmpty()){
+            return RegisterResponseDTO.builder().message("No username provided").build();
+        }
+        if(request.getPassword().length() < 8){
+            return RegisterResponseDTO.builder().message("Password must have min. 8 characters").build();
+        }
+        if(!request.getConfirmPassword().equals(request.getPassword())){
+            return RegisterResponseDTO.builder().message("Passwords must match").build();
+        }
+
+
+        var user = User.builder().role("ROLE_USER")
+                .password(passwordEncoder.encode(request.getPassword()))
+                .username(request.getUsername())
+                .createdAt(LocalDateTime.now()).build();
+        userRepository.save(user);
+        return RegisterResponseDTO.builder().message("Registered user").build();
     }
 
     public User findByUsername(String username) {

@@ -30,8 +30,6 @@ import java.security.Principal;
 @RequestMapping("/api/v1/chats")
 public class MessageController{
     private MessageService messageService;
-    private JWTService jwtService;
-    private UserDetailsService userDetailsService;
     @GetMapping("/{chatId}/messages")
     public ResponseEntity<MessagesResponseDTO> getMessages(@PathVariable Long chatId){
         return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
@@ -51,15 +49,12 @@ public class MessageController{
         return typingDTO;
     }
 
-
     @MessageMapping("/chat.send")
     @SendTo("/topic/messages")
     public SocketMessageDTO sendMessage(SocketMessageDTO message, Principal principal) {
         String sender = principal.getName();
         message.setSender(sender);
-
-        messageService.sendMessage(message, message.getChatId());
-        return message;
+        return messageService.sendMessage(message, message.getChatId());
     }
 
 

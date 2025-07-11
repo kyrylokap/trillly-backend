@@ -2,8 +2,9 @@ package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
 import org.example.trilly.CustomUserDetails;
+import org.example.trilly.dto.user.register.RegisterRequestDTO;
 import org.example.trilly.dto.user.login.LoginRequestDTO;
-import org.example.trilly.dto.user.login.LoginResponseDTO;
+import org.example.trilly.dto.user.register.RegisterResponseDTO;
 import org.example.trilly.jwt.JWTService;
 import org.example.trilly.models.User;
 import org.example.trilly.services.UserService;
@@ -11,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -25,7 +25,7 @@ public class AuthController {
     private final JWTService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<LoginResponseDTO> registerUser(@RequestBody LoginRequestDTO requestDTO){
+    public ResponseEntity<RegisterResponseDTO> registerUser(@RequestBody RegisterRequestDTO requestDTO){
         return ResponseEntity.ok(userService.registerUser(requestDTO));
     }
 

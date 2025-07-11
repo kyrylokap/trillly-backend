@@ -16,13 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JWTChannelInterceptor implements ChannelInterceptor {
-
     @Autowired
     private JWTService jwtService;
-
     @Autowired
     private CustomUserDetailsService userDetailsService;
-
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
@@ -45,7 +42,6 @@ public class JWTChannelInterceptor implements ChannelInterceptor {
                 }
             }
         }
-
         return message;
     }
 }

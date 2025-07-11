@@ -49,13 +49,13 @@ public class Config implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
          http.csrf(AbstractHttpConfigurer::disable)
-                 .cors(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/ws/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                 .oauth2Login(oauth -> oauth.successHandler(successHandler))
+                .oauth2Login(oauth -> oauth.successHandler(successHandler))
                 .userDetailsService(customUserDetailsService)
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
 
