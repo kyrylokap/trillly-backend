@@ -15,8 +15,8 @@ It provides REST APIs and WebSocket endpoints for real-time notifications, user 
 - 🗃️ **Spring Data JPA & Hibernate** — ORM and database management  
 - 🐘 **PostgreSQL** — Relational database  
 - 💡 **Lombok** — Boilerplate code reduction  
-- 🔐 **Spring Security + JWT** — Authentication & Authorization  
-- ⚙️ **Maven / Gradle** — Build tools  
+- 🔐 **Spring Security + JWT** + Oauth2** — Authentication & Authorization  
+- ⚙️ **Maven  — Build tools  
 
 ---
 
@@ -26,7 +26,6 @@ It provides REST APIs and WebSocket endpoints for real-time notifications, user 
 - 📡 **Real-Time Notifications** using WebSocket & STOMP  
 - 🛠️ **RESTful APIs** for users, posts, comments, notifications  
 - 💾 **Persistent Storage** with PostgreSQL  
-- ⚠️ **Robust Error Handling**
 
 ---
 
