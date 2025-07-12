@@ -30,5 +30,4 @@ It provides REST APIs and WebSocket endpoints for real-time notifications, user 
 
 ---
 
-## 📂 Project Structure
 
