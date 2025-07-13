@@ -28,25 +28,42 @@ public class MessageService {
         List<String> times = new ArrayList<>();
         List<String> senders = new ArrayList<>();
         List<String> types = new ArrayList<>();
+        List<Long> ids = new ArrayList<>();
         messageRepository.getMessagesByChatId(chatId).forEach(message -> {
             messages.add(message.getText());
             types.add(message.getType());
             String time = message.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
             times.add(time);
             senders.add(message.getSender().getUsername());
+            ids.add(message.getId());
         });
         return MessagesResponseDTO.builder()
                 .messages(messages)
                 .times(times)
                 .types(types)
+                .ids(ids)
                 .senders(senders).build();
+    }
+
+    public SocketMessageDTO changeMessageSocket(SocketMessageDTO message){
+        Message m = messageRepository.findMessageByIdAndChatId(message.getId(), message.getChatId());
+        m.setText(message.getText());
+        messageRepository.save(m);
+
+        return SocketMessageDTO.builder()
+                .id(message.getId())
+                .text(message.getText())
+                .chatId(message.getChatId())
+                .type(m.getType())
+                .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                .build();
     }
 
 
 
-    public SocketMessageDTO sendMessage(SocketMessageDTO message, Long chatId){
+    public SocketMessageDTO sendMessageSocket(SocketMessageDTO message, Long chatId){
         LocalDateTime time = LocalDateTime.now();
-        messageRepository.save(
+        var msg = messageRepository.save(
                 Message.builder().text(message.getText())
                         .time(time)
                         .chat(chatRepository.findById(chatId).get())
@@ -54,6 +71,7 @@ public class MessageService {
                         .sender(userRepository.findByUsername(message.getSender()))
                         .build());
         message.setTime(time.format(DateTimeFormatter.ofPattern("HH:mm")));
+        message.setId(msg.getId());
         return message;
     }
 

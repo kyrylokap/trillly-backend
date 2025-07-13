@@ -54,7 +54,14 @@ public class MessageController{
     public SocketMessageDTO sendMessage(SocketMessageDTO message, Principal principal) {
         String sender = principal.getName();
         message.setSender(sender);
-        return messageService.sendMessage(message, message.getChatId());
+        return messageService.sendMessageSocket(message, message.getChatId());
+    }
+
+    @MessageMapping("/chat.change")
+    @SendTo("/topic/change")
+    public SocketMessageDTO changeMessageSocket(SocketMessageDTO message) {
+
+        return messageService.changeMessageSocket(message);
     }
 
 
