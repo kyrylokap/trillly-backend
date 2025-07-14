@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @RestController
@@ -31,9 +32,10 @@ import java.security.Principal;
 public class MessageController{
     private MessageService messageService;
     @GetMapping("/{chatId}/messages")
-    public ResponseEntity<MessagesResponseDTO> getMessages(@PathVariable Long chatId){
+    public ResponseEntity<List<MessagesResponseDTO>> getMessages(@PathVariable Long chatId){
         return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
     }
+
     /*@PostMapping("/{chatId}/messages")        If need REST messaging
     public ResponseEntity<Void> sendMessage(@PathVariable Long chatId,
                                                @RequestBody MessageDTO message){
@@ -41,6 +43,13 @@ public class MessageController{
         messageService.sendMessage(message, chatId);
         return  ResponseEntity.ok().build();
     }*/
+
+
+    @PutMapping("/markSeen")
+    public List<MessagesResponseDTO> setSeenMarkInMessage(@RequestParam Long chatId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return messageService.changeSeenMark(chatId, username);
+    }
 
     @MessageMapping("/chat.typing")
     @SendTo("/topic/typing")

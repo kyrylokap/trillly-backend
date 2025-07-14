@@ -31,5 +31,7 @@ public class Message {
 
     @Column(name = "type")
     private String type;
+
+    private boolean seen;
 }
 

@@ -28,26 +28,37 @@ public class MessageService {
         messageRepository.deleteById(socketMessage.getId());
 
     }
-    public MessagesResponseDTO getMessagesByChatId(Long chatId){
-        List<String> messages = new ArrayList<>();
-        List<String> times = new ArrayList<>();
-        List<String> senders = new ArrayList<>();
-        List<String> types = new ArrayList<>();
-        List<Long> ids = new ArrayList<>();
-        messageRepository.getMessagesByChatId(chatId).forEach(message -> {
-            messages.add(message.getText());
-            types.add(message.getType());
-            String time = message.getTime().toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
-            times.add(time);
-            senders.add(message.getSender().getUsername());
-            ids.add(message.getId());
-        });
+
+    public List<MessagesResponseDTO> changeSeenMark(Long chatId, String username){
+
+        List<Message> messages = messageRepository.getMessagesByChatId(chatId);
+
+        messages.stream().filter(m -> !m.getSender().equals(username)).forEach(m-> m.setSeen(true));
+
+        messageRepository.saveAll(messages);
+
+        return messages.stream()
+                .map(this::mapMsg).toList();
+    }
+
+
+    public List<MessagesResponseDTO> getMessagesByChatId(Long chatId){
+
+        return messageRepository.getMessagesByChatId(chatId)
+                .stream().map((this::mapMsg))
+                .toList();
+    }
+
+    private MessagesResponseDTO mapMsg(Message m){
+
         return MessagesResponseDTO.builder()
-                .messages(messages)
-                .times(times)
-                .types(types)
-                .ids(ids)
-                .senders(senders).build();
+                .seen(m.isSeen())
+                .message(m.getText())
+                .id(m.getId())
+                .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")))
+                .sender(m.getSender().getUsername())
+                .type(m.getType())
+                .build();
     }
 
     public SocketMessageDTO changeMessageSocket(SocketMessageDTO message){
@@ -60,7 +71,8 @@ public class MessageService {
                 .text(message.getText())
                 .chatId(message.getChatId())
                 .type(m.getType())
-                .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm")))
+                .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")))
+                .seen(m.isSeen())
                 .build();
     }
 
@@ -75,8 +87,9 @@ public class MessageService {
                         .type(message.getType())
                         .sender(userRepository.findByUsername(message.getSender()))
                         .build());
-        message.setTime(time.format(DateTimeFormatter.ofPattern("HH:mm")));
+        message.setTime(time.format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")));
         message.setId(msg.getId());
+        message.setSeen(msg.isSeen());
         return message;
     }
 
@@ -86,7 +99,7 @@ public class MessageService {
         messageRepository.save(m);
     }
 
-    public void deleteMessage(Long messageId, Long chatId){
+    /*public void deleteMessage(Long messageId, Long chatId){
         messageRepository.deleteByIdAndChatId(messageId, chatId);
-    }
+    }*/
 }

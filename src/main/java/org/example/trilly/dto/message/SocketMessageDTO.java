@@ -15,5 +15,6 @@ public class SocketMessageDTO {
     private Long id;
     private String type;
     private String time;
+    private boolean seen;
 }
 

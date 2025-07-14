@@ -14,9 +14,10 @@ import java.util.List;
 @Data
 @Builder
 public class MessagesResponseDTO{
-    private List<String> messages;
-    private List<String> times;
-    private List<String> senders;
-    private List<String> types;
-    private List<Long> ids;
+    private String message;
+    private String time;
+    private String sender;
+    private String type;
+    private Long id;
+    private boolean seen;
 }
