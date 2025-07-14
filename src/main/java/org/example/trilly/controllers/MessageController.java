@@ -49,6 +49,13 @@ public class MessageController{
         return typingDTO;
     }
 
+    @MessageMapping("/chat.delete")
+    @SendTo("/topic/delete")
+    public SocketMessageDTO deleteMessage(SocketMessageDTO socketMessage){
+        messageService.deleteMessageSocket(socketMessage);
+        return socketMessage;
+    }
+
     @MessageMapping("/chat.send")
     @SendTo("/topic/messages")
     public SocketMessageDTO sendMessage(SocketMessageDTO message, Principal principal) {
@@ -72,10 +79,11 @@ public class MessageController{
         messageService.changeMessage(message, chatId);
         return ResponseEntity.ok().build();
     }
+    /*
     @DeleteMapping("/{chatId}/messages/{messageId}")
     public ResponseEntity<Void> deleteMessage(@PathVariable Long chatId,
                               @PathVariable Long messageId){
         messageService.deleteMessage(messageId, chatId);
         return ResponseEntity.ok().build();
-    }
+    }*/
 }

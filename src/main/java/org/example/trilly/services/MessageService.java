@@ -23,6 +23,11 @@ public class MessageService {
     private final MessageRepository messageRepository;
     private final ChatRepository chatRepository;
     private final UserRepository userRepository;
+
+    public void deleteMessageSocket(SocketMessageDTO socketMessage){
+        messageRepository.deleteById(socketMessage.getId());
+
+    }
     public MessagesResponseDTO getMessagesByChatId(Long chatId){
         List<String> messages = new ArrayList<>();
         List<String> times = new ArrayList<>();
