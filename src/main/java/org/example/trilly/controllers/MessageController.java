@@ -1,25 +1,16 @@
 package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.example.trilly.CustomUserDetails;
 import org.example.trilly.dto.message.MessageDTO;
 import org.example.trilly.dto.message.MessagesResponseDTO;
 import org.example.trilly.dto.message.SocketMessageDTO;
 import org.example.trilly.dto.message.TypingDTO;
-import org.example.trilly.jwt.JWTService;
 import org.example.trilly.services.MessageService;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -76,7 +67,6 @@ public class MessageController{
     @MessageMapping("/chat.change")
     @SendTo("/topic/change")
     public SocketMessageDTO changeMessageSocket(SocketMessageDTO message) {
-
         return messageService.changeMessageSocket(message);
     }
 

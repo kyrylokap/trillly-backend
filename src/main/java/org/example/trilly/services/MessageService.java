@@ -26,7 +26,6 @@ public class MessageService {
 
     public void deleteMessageSocket(SocketMessageDTO socketMessage){
         messageRepository.deleteById(socketMessage.getId());
-
     }
 
     public List<MessagesResponseDTO> changeSeenMark(Long chatId, String username){
@@ -58,12 +57,14 @@ public class MessageService {
                 .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")))
                 .sender(m.getSender().getUsername())
                 .type(m.getType())
+                .edited(m.isEdited())
                 .build();
     }
 
     public SocketMessageDTO changeMessageSocket(SocketMessageDTO message){
         Message m = messageRepository.findMessageByIdAndChatId(message.getId(), message.getChatId());
         m.setText(message.getText());
+        m.setEdited(true);
         messageRepository.save(m);
 
         return SocketMessageDTO.builder()
@@ -73,6 +74,7 @@ public class MessageService {
                 .type(m.getType())
                 .time(m.getTime().format(DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy")))
                 .seen(m.isSeen())
+                .edited(m.isEdited())
                 .build();
     }
 

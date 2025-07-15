@@ -1,15 +1,13 @@
-package org.example.trilly;
+package org.example.trilly.config;
 
 import lombok.AllArgsConstructor;
+import org.example.trilly.config.CustomUserDetails;
 import org.example.trilly.models.User;
 import org.example.trilly.repositories.UserRepository;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @AllArgsConstructor

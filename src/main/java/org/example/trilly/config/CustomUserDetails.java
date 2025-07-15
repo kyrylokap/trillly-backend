@@ -1,4 +1,4 @@
-package org.example.trilly;
+package org.example.trilly.config;
 
 import org.example.trilly.models.User;
 import org.springframework.security.core.GrantedAuthority;

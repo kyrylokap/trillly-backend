@@ -33,5 +33,7 @@ public class Message {
     private String type;
 
     private boolean seen;
+
+    private boolean edited;
 }
 

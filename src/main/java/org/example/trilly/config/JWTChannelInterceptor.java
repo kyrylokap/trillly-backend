@@ -1,7 +1,5 @@
 package org.example.trilly.config;
 
-import org.example.trilly.CustomUserDetails;
-import org.example.trilly.CustomUserDetailsService;
 import org.example.trilly.jwt.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
@@ -11,7 +9,6 @@ import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 @Component

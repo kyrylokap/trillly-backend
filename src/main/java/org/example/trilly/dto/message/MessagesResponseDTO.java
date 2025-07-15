@@ -20,4 +20,5 @@ public class MessagesResponseDTO{
     private String type;
     private Long id;
     private boolean seen;
+    private boolean edited;
 }

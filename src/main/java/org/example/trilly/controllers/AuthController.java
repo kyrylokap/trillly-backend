@@ -1,7 +1,7 @@
 package org.example.trilly.controllers;
 
 import lombok.AllArgsConstructor;
-import org.example.trilly.CustomUserDetails;
+import org.example.trilly.config.CustomUserDetails;
 import org.example.trilly.dto.user.register.RegisterRequestDTO;
 import org.example.trilly.dto.user.login.LoginRequestDTO;
 import org.example.trilly.dto.user.register.RegisterResponseDTO;

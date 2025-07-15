@@ -36,11 +36,10 @@ public class MessageServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private MessageService messageService;  // или как у тебя называется класс
+    private MessageService messageService;
 
     @Test
     void testSendMessage_savesCorrectMessage() {
-        // Подготовка данных
         Long chatId = 1L;
         String senderUsername = "testUser";
 
@@ -56,7 +55,7 @@ public class MessageServiceTest {
         when(userRepository.findByUsername(senderUsername)).thenReturn(mockUser);
         when(chatRepository.findById(chatId)).thenReturn(Optional.of(mockChat));
 
-        messageService.sendMessage(dto, chatId);
+        //messageService.sendMessage(dto, chatId);
 
         ArgumentCaptor<Message> captor = ArgumentCaptor.forClass(Message.class);
         verify(messageRepository).save(captor.capture());

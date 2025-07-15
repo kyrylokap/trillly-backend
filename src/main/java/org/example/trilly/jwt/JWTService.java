@@ -2,9 +2,8 @@ package org.example.trilly.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.example.trilly.CustomUserDetails;
+import org.example.trilly.config.CustomUserDetails;
 import org.example.trilly.models.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
