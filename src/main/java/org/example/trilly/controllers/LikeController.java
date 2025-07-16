@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users/")
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class LikeController {
     private final LikeService likeService;
@@ -23,7 +23,15 @@ public class LikeController {
 
     @PostMapping("/{postId}/user")
     public ResponseEntity<Boolean> likePost(@PathVariable Long postId){
+        System.out.println("Hello");
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
         return ResponseEntity.ok(likeService.likePost(username, postId));
+    }
+
+    @GetMapping ("/check/{postId}")
+    ResponseEntity<?> checkIfPostLikedByUser(@PathVariable Long postId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(likeService.isLikedByUsernameAndPostId(username, postId));
     }
 }

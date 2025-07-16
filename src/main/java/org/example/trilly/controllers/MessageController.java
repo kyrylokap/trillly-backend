@@ -27,13 +27,7 @@ public class MessageController{
         return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
     }
 
-    /*@PostMapping("/{chatId}/messages")        If need REST messaging
-    public ResponseEntity<Void> sendMessage(@PathVariable Long chatId,
-                                               @RequestBody MessageDTO message){
-        message.setSender(SecurityContextHolder.getContext().getAuthentication().getName());
-        messageService.sendMessage(message, chatId);
-        return  ResponseEntity.ok().build();
-    }*/
+
 
 
     @PutMapping("/markSeen")

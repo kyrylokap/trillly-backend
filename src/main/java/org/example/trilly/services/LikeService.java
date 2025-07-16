@@ -45,15 +45,18 @@ public class LikeService {
     }
 
     public boolean likePost(String username, Long postId){
-        if(likeRepository.existsByUserUsernameAndPostId(username,postId)){
-            Like l = likeRepository.findByPostIdAndUserUsername(postId, username);
+        if(likeRepository.existsByUserUsernameAndPostId(username,postId)) {
+            Like l = likeRepository.getFirstByUserUsernameAndPostId(username, postId);
             likeRepository.delete(l);
             return false;
-        }else{
-            var user = userRepository.findByUsername(username);
-            var post = postRepository.findById(postId).get();
-            likeRepository.save(Like.builder().post(post).user(user).build());
         }
+        var user = userRepository.findByUsername(username);
+        var post = postRepository.getReferenceById(postId);
+        likeRepository.save(Like.builder().post(post).user(user).build());
+
         return true;
+    }
+    public boolean isLikedByUsernameAndPostId(String username, Long postId){
+        return likeRepository.existsByUserUsernameAndPostId(username, postId);
     }
 }
