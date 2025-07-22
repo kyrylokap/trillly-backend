@@ -23,7 +23,7 @@ public class Oauth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+                                        Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String username = oAuth2User.getAttribute("name");
 
@@ -38,4 +38,5 @@ public class Oauth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String redirectUrl = "http://localhost:3000/oauth2/success?token=" + token + "&username=" + user.getUsername();
         getRedirectStrategy().sendRedirect(request, response, redirectUrl);
     }
+
 }

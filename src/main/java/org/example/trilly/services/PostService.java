@@ -20,6 +20,7 @@ public class PostService {
     private final UserRepository userRepository;
 
     public List<PostResponseDTO> getRandomPosts(){
+
         return postRepository.findRandomPosts().stream().map(this::mapToDTO).toList();
     }
     public List<PostResponseDTO> getUserPosts(String username){

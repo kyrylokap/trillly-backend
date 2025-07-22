@@ -11,7 +11,7 @@ import java.util.Date;
 @Service
 public class JWTService {
     private static final String SECRET_KEY = "p_aaa_ccz_12";
-    private static final long EXPIRATION_TIME = 86400000;
+    private static final long EXPIRATION_TIME = dd 86400000;
 
     public String generateToken(User user){
         return Jwts.builder()
@@ -35,7 +35,7 @@ public class JWTService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    private boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Date expiration = Jwts.parser()
                 .setSigningKey(SECRET_KEY)
                 .parseClaimsJws(token)

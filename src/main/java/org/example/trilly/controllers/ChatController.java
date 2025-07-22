@@ -15,12 +15,12 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ChatController{
     private final ChatService chatService;
-    @GetMapping("/users/user/chats")       //ok
+    @GetMapping("/users/user/chats")
     public ResponseEntity<List<ChatResponseDTO>> getMyChats(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(chatService.getMyAllChats(username));
     }
-    @GetMapping("/chats/user/{foundUsername}")   //ok
+    @GetMapping("/chats/user/{foundUsername}")
     public ResponseEntity<List<ChatResponseDTO>> getChatBySearching(@PathVariable String foundUsername){
         String finderUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         return ResponseEntity.ok(chatService.getChatsByUsername(finderUsername, foundUsername));
